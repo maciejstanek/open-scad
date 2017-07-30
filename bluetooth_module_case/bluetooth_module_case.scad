@@ -10,7 +10,7 @@ translate([22, 0, 0]) difference() {
     cube([19.1, 39.2, 1]);
     translate([1, 1, 0]) cube([17.1, 37.2, 2]);
   }
-  translate([9.5, 26, 0.5]) scale(0.1) surface("assets/bluetooth_symbol.png", center = true, invert = true);
+  translate([9.5, 26, 0.5]) scale(0.1) surface("bluetooth_symbol.png", center = true, invert = true);
   label = ["KEY", "RX ", "TX ", "5V ", "3V3", "GND"];
   for(i = [0:5]) {
     echo([i, label[i]]);
