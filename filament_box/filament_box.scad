@@ -2,23 +2,22 @@
 
 rod_diameter = 8;
 holder_thickness = 5;
-holder_length = 20;
+holder_length = 12;
 holder_extension = 5;
 base_size = 20;
-base_thickness = 4;
+base_thickness = 3;
 ngon_count = 6;
 screws_count = 3;
 screws_diameter = 3;
 screws_distance = base_size - 4;
-screw_head_thickness = base_thickness - 2.5;
+screw_head_thickness = 1;
 screw_head_size = screws_diameter + 2;
 font = "Ubuntu Mono";
 text_back = "3D";
 filament_thickness = 2;
-tube_side_thickness = 3;
-tube_base_radius = 9;
-tube_height = 20;
-tube_polygon_count = 100;
+tube_side_thickness = 2;
+tube_base_radius = 10;
+tube_height = 11;
 
 ///// Submodules /////
 
