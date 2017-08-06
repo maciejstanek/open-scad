@@ -22,8 +22,12 @@ tube_height = 11;
 ///// Submodules /////
 
 module holder_slice() {
-  translate([rod_diameter / 2 + holder_thickness / 2, 0, 0]) circle(d = holder_thickness, $fn = 100);
-  translate([rod_diameter / 2, 0, 0]) square([holder_thickness , holder_length]);
+  translate([holder_thickness / 2, 0, 0]) circle(d = holder_thickness, $fn = 100);
+  square([holder_thickness , holder_length]);
+  translate([holder_thickness, holder_length - holder_extension]) difference() {
+     square([holder_extension, holder_extension]);
+     translate([holder_thickness, 0]) circle(r = holder_thickness, $fn = 100);
+  }
 }
 
 module holder_template() {
@@ -55,14 +59,29 @@ module base_plate(holes) {
   }
 }
 
+module extruded_holder_slice() {
+  rotate_extrude($fn = 100) translate([ -holder_thickness / 2, 0]) difference() {
+    holder_slice();
+    translate([- holder_thickness / 2, - holder_thickness / 2]) square([holder_thickness , holder_length + holder_thickness]);
+  }
+}
+
 ///// Main Modules /////
 
 module the_rod_holder_front() {
   base_plate();
+  // TODO: add a support under the holder
   translate([0, 0, holder_length + base_thickness]) rotate([180, 0, 0]) {
     difference() {
-      rotate_extrude($fn = 100) holder_slice();
+      rotate_extrude($fn = 100) translate([rod_diameter / 2, 0]) holder_slice();
       translate([50, 0, 0]) cube(100, center = true);
+    }
+    difference() {
+      union() {
+        translate([0, holder_thickness / 2 + rod_diameter / 2, 0]) extruded_holder_slice();
+        translate([0, -holder_thickness / 2 - rod_diameter / 2, 0]) extruded_holder_slice();
+      }
+      cube([1000, rod_diameter + holder_thickness, 2 * holder_length + 1], center = true);
     }
     for(m = [-1,1]) translate([0, m * (rod_diameter / 2 + holder_thickness / 2), 0]) hull() {
       holder_template();
