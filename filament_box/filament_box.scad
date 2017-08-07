@@ -1,22 +1,24 @@
 ///// Parameters /////
 
 rod_diameter = 8;
-holder_thickness = 5;
+holder_thickness = 4;
 holder_length = 12;
 holder_extension = 5;
+holder_base = 4;
 base_size = 20;
 base_thickness = 3;
+base_roundness = 3;
 ngon_count = 6;
 screws_count = 3;
 screws_diameter = 3;
 screws_distance = base_size - 4;
 screw_head_thickness = 1;
-screw_head_size = 6;
+screw_head_size = 7;
 font = "Ubuntu Mono";
 text_back = "MS";
 filament_thickness = 2;
 tube_side_thickness = 2;
-tube_base_radius = 10;
+tube_base_radius = 9;
 tube_height = 11;
 
 ///// Submodules /////
@@ -24,9 +26,9 @@ tube_height = 11;
 module holder_slice() {
   translate([holder_thickness / 2, 0, 0]) circle(d = holder_thickness, $fn = 100);
   square([holder_thickness , holder_length]);
-  translate([holder_thickness, holder_length - holder_extension]) difference() {
-     square([holder_extension, holder_extension]);
-     translate([holder_thickness, 0]) circle(r = holder_thickness, $fn = 100);
+  translate([holder_thickness, holder_length - holder_base]) difference() {
+     square([holder_base, holder_base]);
+     translate([holder_base, 0]) circle(r = holder_base, $fn = 100);
   }
 }
 
@@ -48,8 +50,8 @@ module base_plate(holes) {
   difference() {
     // Plate
     hull() for(i = [0:ngon_count-1]) rotate(360 / ngon_count * i, [0, 0, 1]) translate([base_size, 0, 0]) union() {
-      translate([0, 0, base_thickness - 1]) sphere(d = 2, center = true, $fn = 16);
-      cylinder(h = base_thickness - 1, d = 2, $fn = 16);
+      translate([0, 0, base_thickness - base_roundness / 2]) sphere(d = base_roundness, center = true, $fn = 16);
+      cylinder(h = base_thickness - 1, d = base_roundness, $fn = 16);
     }
     // Screw holes
     for(m = [0:screws_count-1]) rotate(360 / screws_count * m, [0, 0, 1]) translate([-screws_distance, 0, -1]) {
