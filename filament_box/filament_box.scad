@@ -16,10 +16,11 @@ screw_head_thickness = 1;
 screw_head_size = 7;
 font = "Ubuntu Mono";
 text_back = "MS";
-filament_thickness = 2;
+text_depth = 0.5;
+filament_thickness = 3;
 tube_side_thickness = 2;
 tube_base_radius = 9;
-tube_height = 11;
+tube_height = 10;
 
 ///// Submodules /////
 
@@ -95,7 +96,7 @@ module the_rod_holder_front() {
 module the_rod_holder_back() {
   difference() {
     base_plate(holes = true);
-    translate([0, 0, base_thickness - 1]) rotate([0, 0, -90]) linear_extrude(height = 2) text(text_back, 0.7 * base_size, font, $fn = 6, valign = "center", halign = "center", $fn = 100);
+    translate([0, 0, base_thickness - text_depth]) rotate([0, 0, -90]) linear_extrude(height = 2) text(text_back, 0.7 * base_size, font, $fn = 6, valign = "center", halign = "center", $fn = 100);
   }
 }
 
@@ -128,3 +129,4 @@ translate([spread, 0, 0]) the_rod_holder_back();
 translate([spread, spread, 0]) the_rod_holder_front();
 translate([0, spread, 0]) the_filament_output_back();
 the_filament_output_front();
+
