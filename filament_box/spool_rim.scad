@@ -1,12 +1,12 @@
-spool_inner_diameter = 51;
-spool_outer_diameter = 56.5;
+spool_inner_diameter = 52;
+spool_outer_diameter = 57;
 axis_diameter = 8;
 walls_thickness = 3;
 spool_width = 80;
 number_of_rays = 9;
 hook_gap_angle = 47;
 hook_depth = walls_thickness + 5;
-ring_diameter = 24;
+ring_diameter = 25;
 ring_thickness = 2;
 ray_width = 6;
 
