@@ -27,7 +27,7 @@ module HL149() {
 	l456 = l4 + l56;
 	l3456 = l3 + l456;
 
-	difference() {
+	rotate([-90, 0, 0]) translate([0, 0, -l3456]) difference() {
 		rotate_extrude($fn = 50) rotate([180, 0, 90]) polygon(points = [
 			[0, 0],
 			[0, d6 / 2],
@@ -50,4 +50,10 @@ module HL149() {
 	}
 }
 
+module HL149_stand() {
+
+	cube(123);
+}
+
+HL149_stand();
 HL149();
