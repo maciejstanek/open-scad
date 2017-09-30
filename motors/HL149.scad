@@ -1,3 +1,5 @@
+use <../libs/utils.scad>;
+
 module HL149() {
 	d1 = 4;
 	d1_cut = 3.4;
@@ -26,9 +28,17 @@ module HL149() {
 	l56 = l5 + l6;
 	l456 = l4 + l56;
 	l3456 = l3 + l456;
+	echo(l1 = l1,
+		l_cut = l_cut,
+		l2 = l2,
+		l3 = l3,
+		l4 = l4,
+		l5 = l5,
+		l6 = l6
+	);
 
 	rotate([-90, 0, 0]) translate([0, 0, -l3456]) difference() {
-		rotate_extrude($fn = 50) rotate([180, 0, 90]) polygon(points = [
+		rotate_extrude($fn = 100) rotate([180, 0, 90]) polygon(points = [
 			[0, 0],
 			[0, d6 / 2],
 			[l6, d6 / 2],
@@ -42,7 +52,7 @@ module HL149() {
 			[l23456, d2 / 2],
 			[l23456, d1 / 2],
 			[l123456, d1 / 2],
-			[l123456, 0],
+			[l123456, 0]
 		]);
 		translate([d1_cut - d1 / 2, -d1 / 2, l123456 - l_cut]) cube([d1, d1, l_cut + 1]);
 		translate([d_holes_place/2, 0, l3456 - 1]) cylinder(h = 2, d = d_holes, $fn = 50);
@@ -51,9 +61,28 @@ module HL149() {
 }
 
 module HL149_stand() {
+	length = 60;
+	motor_d = 27.8;
+	width = motor_d + 6;
+	front_thickness = 4.4;
+	d_holes_place = 19.6;
+	d_holes = 3;
+	platform_height = 5;
+	shaft_hole_d = 9.4;
 
-	cube(123);
+	rotate([-90, 0, 0]) linear_extrude(front_thickness) difference() {
+		circle(d = width, $fn = 100);
+		circle(d = shaft_hole_d, $fn = 100);
+		copy_mirror([1, 0, 0]) translate([d_holes_place / 2, 0, 0]) circle(d = d_holes, $fn = 100);
+	}
+	difference() {
+		translate([-width / 2, -length, -motor_d / 2 - platform_height]) cube([width, length + front_thickness, motor_d / 2 + platform_height]);
+		translate([0, front_thickness + 1, 0]) rotate([0, 90, -90]) cylinder(d = motor_d, h = length + length + 2, $fn = 100);
+	}
+	// TODO: Add a place for encoders
+	// TODO: Add a encoder wheel
 }
 
-HL149_stand();
-HL149();
+color("Lime") HL149_stand();
+translate([50, 0, 0])
+	color("Red") HL149();
