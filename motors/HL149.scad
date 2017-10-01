@@ -60,6 +60,32 @@ module HL149() {
 	}
 }
 
+module HL149_stand_screw() {
+	head_d = 4;
+	head_h = 1.2;
+	head_cut_depth = 0.4;
+	head_cut_width = 0.8;
+	total_d = 2.2;
+	total_h = 9.6;
+
+	translate([0, 0, -head_h]) difference() {
+		cylinder(h = head_h, d = head_d, $fn = 100);
+		cube([head_cut_width, head_d + 1, 2 * head_cut_depth], center = true);
+	}
+	cylinder(h = total_h - head_h, d = total_d, $fn = 100);
+}
+
+module HL149_stand_nut() {
+	total_d = 4.8;
+	inner_d = 2.2;
+	total_h = 1.6;
+
+	linear_extrude(total_h) {
+		circle(d = total_d, $fn = 6);
+		circle(d = inner_d, $fn = 100);
+	}
+}
+
 module HL149_stand() {
 	length = 60;
 	motor_d = 27.8;
@@ -83,6 +109,9 @@ module HL149_stand() {
 	// TODO: Add a encoder wheel
 }
 
-color("Lime") HL149_stand();
-translate([50, 0, 0])
-	color("Red") HL149();
+translate([-50, 0, 0]) color("Lime") HL149_stand();
+translate([50, 0, 0]) color("Red") HL149();
+color("Silver") {
+	translate([0, 0, 5]) HL149_stand_nut();
+	HL149_stand_screw();
+}
