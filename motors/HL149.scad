@@ -87,7 +87,7 @@ module HL149_stand_nut() {
 }
 
 module HL149_stand() {
-	length = 60;
+	length = 57;
 	motor_d = 27.8;
 	width = motor_d + 6;
 	front_thickness = 4.4;
@@ -109,9 +109,10 @@ module HL149_stand() {
 	// TODO: Add a encoder wheel
 }
 
-translate([-50, 0, 0]) color("Lime") HL149_stand();
-translate([50, 0, 0]) color("Red") HL149();
-color("Silver") {
-	translate([0, 0, 5]) HL149_stand_nut();
-	HL149_stand_screw();
-}
+translate([0, 0, 18.9]) color("Lime") HL149_stand();
+translate([0, 0, 18.9]) color("Red") HL149();
+color("Gray") translate([0, -70.6, -0.5]) cube([150, 150, 1], center = true);
+// color("Blue") {
+// 	translate([0, 0, 5]) HL149_stand_nut();
+// 	HL149_stand_screw();
+// }
