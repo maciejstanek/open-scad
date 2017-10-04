@@ -3,11 +3,15 @@ use <../motors/HL149.scad>;
 use <../wheels/encoder_wheel.scad>;
 
 module lf(chassis_only = true) {
+	// TODO: Prepare a place for encoders
+	// TODO: Add PCB case
+	// TODO: Figure out how to fix the motor on its back
+
 	filament_color = "DarkOrange";
 	wheels_distance = 150;
 	motor_d = 27.8;
-	motor_handle_wall_thickness = 3;
-	width = motor_d + 2 * motor_handle_wall_thickness;
+	wall_thickness = 3;
+	width = motor_d + 2 * wall_thickness;
 	front_thickness = 4.4;
 	d_holes_place = 19.6;
 	d_holes = 3;
@@ -16,15 +20,8 @@ module lf(chassis_only = true) {
 	wheel_d = 50;
 	encoders_cutout_width = 36;
 	echo(bottom_clearance = (wheel_d / 2 - motor_d / 2 - platform_height));
-
-	color(filament_color) translate([-width / 2, -wheels_distance / 2 - front_thickness, 0]) difference() {
-		cube([width, wheels_distance + 2 * front_thickness, platform_height + motor_d / 2]);
-		translate([width / 2, 0, platform_height + motor_d / 2]) rotate([270, 0, 0]) translate([0, 0, -1]) cylinder(d = motor_d, h = 2 * (wheels_distance + front_thickness + 1), $fn = 100);
-		translate([motor_handle_wall_thickness, front_thickness + wheels_distance / 2 - encoders_cutout_width / 2, platform_height]) cube([width, encoders_cutout_width, motor_d + 1]);
-	}
-	// TODO: Prepare a place for encoders
-	// TODO: Add PCB case
-	// TODO: Figure out how to fix the motor on its back
+	core_length = 40;
+	core_width = 80;
 
 	module lf_motor_handle(chassis_only = chassis_only) {
 		wheel_on_shaft_distance = 7.5;
@@ -44,12 +41,26 @@ module lf(chassis_only = true) {
 				}
 			}
 		}
-		// TODO: Add encoder wheels
 	}
 
-	translate([0, 0, motor_d / 2 + platform_height]) {
-		lf_motor_handle();
-		mirror([0, 1, 0]) lf_motor_handle();
+	union() {
+		translate([-width / 2, -wheels_distance / 2 - front_thickness, 0]) difference() {
+			color(filament_color) union() {
+				difference() {
+					cube([width, wheels_distance + 2 * front_thickness, platform_height + motor_d / 2]);
+					translate([width / 2, 0, platform_height + motor_d / 2]) rotate([270, 0, 0]) translate([0, 0, -1]) cylinder(d = motor_d, h = 2 * (wheels_distance + front_thickness + 1), $fn = 100);
+					translate([wall_thickness, front_thickness + wheels_distance / 2 - encoders_cutout_width / 2, platform_height]) difference() {
+						cube([width, encoders_cutout_width, motor_d + 1]);
+						// translate([-1, -1, 0]) cube([2, encoders_cutout_width + 2, 1 + 1]);
+					}
+				}
+				translate([width, core_width / 2, 0]) cube([core_length, core_width, platform_height]);
+			}
+		}
+		translate([0, 0, motor_d / 2 + platform_height]) {
+			lf_motor_handle();
+			mirror([0, 1, 0]) lf_motor_handle();
+		}
 	}
 }
 
