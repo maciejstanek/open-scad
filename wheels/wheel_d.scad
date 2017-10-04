@@ -1,7 +1,6 @@
-module wheel_d() {
+module wheel_d(wheel_d = 50) {
 	shaft_d = 4;
 	shaft_d_minus_cut = 3.3;
-	wheel_d = 50;
 	shaft_grip_d = shaft_d + 4;
 	spoke_width = 0.5;
 	tire_width = 2;
