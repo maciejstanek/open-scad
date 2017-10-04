@@ -20,8 +20,18 @@ module lf(chassis_only = true) {
 	wheel_d = 50;
 	encoders_cutout_width = 36;
 	echo(bottom_clearance = (wheel_d / 2 - motor_d / 2 - platform_height));
-	core_length = 40;
-	core_width = 80;
+	core_inner_width = 72;
+	core_inner_length = 36;
+	core_length = core_inner_length + wall_thickness;
+	core_width = core_inner_width + 2 * wall_thickness;
+	core_hole_depth = 2;
+	step_width = 2;
+	pole_d = 8;
+	pole_screw_d = 3;
+	pole_screw_head_d = 5.6;
+	pole_screw_head_h = 1.5;
+	poles_y = [-encoders_cutout_width / 2, 0, encoders_cutout_width / 2];
+	poles_x = [width / 2 + core_inner_length / 2, 0, width / 2 + core_inner_length / 2];
 
 	module lf_motor_handle(chassis_only = chassis_only) {
 		wheel_on_shaft_distance = 7.5;
@@ -44,17 +54,34 @@ module lf(chassis_only = true) {
 	}
 
 	union() {
-		translate([-width / 2, -wheels_distance / 2 - front_thickness, 0]) difference() {
-			color(filament_color) union() {
-				difference() {
-					cube([width, wheels_distance + 2 * front_thickness, platform_height + motor_d / 2]);
-					translate([width / 2, 0, platform_height + motor_d / 2]) rotate([270, 0, 0]) translate([0, 0, -1]) cylinder(d = motor_d, h = 2 * (wheels_distance + front_thickness + 1), $fn = 100);
-					translate([wall_thickness, front_thickness + wheels_distance / 2 - encoders_cutout_width / 2, platform_height]) difference() {
-						cube([width, encoders_cutout_width, motor_d + 1]);
-						// translate([-1, -1, 0]) cube([2, encoders_cutout_width + 2, 1 + 1]);
+		color(filament_color) difference() {
+			union() {
+				translate([-width / 2, -wheels_distance / 2 - front_thickness, 0]) difference() {
+					union() {
+						difference() {
+							cube([width, wheels_distance + 2 * front_thickness, platform_height + motor_d / 2]);
+							translate([width / 2, 0, platform_height + motor_d / 2]) rotate([270, 0, 0])
+								translate([0, 0, -1]) cylinder(d = motor_d, h = wheels_distance + 2 * (front_thickness + 1), $fn = 100);
+							translate([wall_thickness, front_thickness + wheels_distance / 2 - encoders_cutout_width / 2, platform_height])
+								cube([width, encoders_cutout_width, motor_d + 1]);
+						}
+						translate([width, front_thickness + wheels_distance / 2 - core_width / 2, 0]) cube([core_length, core_width, platform_height]);
 					}
+					translate([width + step_width, front_thickness + wheels_distance / 2 - core_inner_width / 2 + step_width, platform_height - core_hole_depth])
+						cube([core_inner_length - 2 * step_width, core_inner_width - 2 * step_width, core_hole_depth + 1]);
+					translate([wall_thickness + step_width, front_thickness + wheels_distance / 2 - encoders_cutout_width / 2 + step_width, platform_height - core_hole_depth])
+						cube([width, encoders_cutout_width - 2 * step_width, core_hole_depth + 1]);
 				}
-				translate([width, core_width / 2, 0]) cube([core_length, core_width, platform_height]);
+				for(i = [0 : 2]) {
+					translate([poles_x[i], poles_y[i], 0]) cylinder(d = pole_d, h = platform_height, $fn = 100);
+				}
+			}
+			// holes for screws
+			for(i = [0 : 2]) {
+				translate([poles_x[i], poles_y[i], -1]) {
+					cylinder(d = pole_screw_d, h = platform_height + 2, $fn = 100);
+					cylinder(d = pole_screw_head_d, h = pole_screw_head_h + 1, $fn = 6);
+				}
 			}
 		}
 		translate([0, 0, motor_d / 2 + platform_height]) {
