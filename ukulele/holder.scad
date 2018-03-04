@@ -21,9 +21,9 @@ module holder_side() {
     rotate([-90,90,0]) {
       linear_extrude(height=b+p) {
         hull() {
-          circle(d=a);
+          circle(d=a,$fn=50);
           translate([h+2*d-a,0,0])
-            circle(d=a);
+            circle(d=a,$fn=50);
         }
       }
     }
