@@ -41,8 +41,9 @@ module frame() {
       cube([x+2*a,l+p,h+2*d]);
     translate([-(x+2*a+1)/2,-l-1,-h])
       cube([x+2*a+1,l+1,h]);
-    translate([-(x+1)/2,-l+a,-h-d-1])
-      cube([x,l-a,h+2*d+2]);
+    scale([1,(l-a)/x,1])
+      translate([0,-x/2,-h-d-1])
+        cylinder(d=x,h=h+2*d+2,$fn=50);
   }
 }
 
