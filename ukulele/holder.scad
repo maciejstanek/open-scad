@@ -6,14 +6,15 @@ l = 80; // shelf grippers length
 h = 20; // shelf height
 b = 45; // ukulele handles length
 
-/*
-color("olive") {
-  y = 1000;
-  z = 230;
-  translate([-y/2,-z,-h])
-    cube([y,z,h]);
+module shelf() {
+  color("olive") {
+    y = 1000;
+    z = 230;
+    e = 0.01;
+    translate([-y/2,-z,-h+e/2])
+      cube([y,z,h-e]);
+  }
 }
-*/
 
 module holder_side() {
   translate([x/2+a/2,0,0]) {
@@ -45,6 +46,7 @@ module frame() {
   }
 }
 
+// shelf();
 color("white") {
   holder();
   intersection() {
