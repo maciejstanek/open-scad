@@ -12,10 +12,10 @@ echo(upper_half_a = upper_half_a, lower_half_a = lower_half_a);
 
 light_hole_d = 7;
 light_hole_x = 10 - light_hole_d / 2;
-light_hole_y = 49.5 - light_hole_d / 2;
+light_hole_y = 49.5 - light_hole_d / 2 - 7;
 knob_hole_inner_d = 6;
 knob_hole_outer_d = 9.5;
-knob_hole_x = 9.5 - knob_hole_inner_d / 2;
+knob_hole_x = 9.5 - knob_hole_inner_d / 2 + 6;
 screw_hole_inner_d = 4;
 screw_hole_outer_d = 7;
 screw_hole_x = knob_hole_x;
