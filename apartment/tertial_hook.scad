@@ -113,6 +113,8 @@ module hook() {
   }
 }
 
-//color("Orange") front_face();
-//color("Yellow") back_face();
-color("Red") hook();
+rotate([90, 0, 0]) {
+  color("CornflowerBlue") front_face();
+  color("RoyalBlue") back_face();
+  color("DodgerBlue") hook();
+}
