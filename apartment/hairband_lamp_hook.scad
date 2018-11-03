@@ -7,8 +7,9 @@ t_p = 2;
 t_p_s = 1.2;
 t_p_h_a = 10;
 t_p_h_b = 10;
-t_p_h_a_t = 0.95 * t_p_h_a;
-t_p_h_b_t = 0.95 * t_p_h_b;
+t_p_h_p = 0.92;
+t_p_h_a_t = t_p_h_p * t_p_h_a;
+t_p_h_b_t = t_p_h_p * t_p_h_b;
 t_p_h_h = 0;
 t_b_s = 0.85;
 t2_h = 0.98 * (t_z + t_p);
@@ -25,7 +26,7 @@ module trapezoid() {
         [t_b/2 - t_d/6.5, -t_h + t_d/4],
         [-t_b/2 + t_d/6.5, -t_h + t_d/4]
       ]);
-      circle(d = t_d/2, $fn = 50);
+      circle(d = t_d/2, $fn = 200);
     }
   }
 }
@@ -82,8 +83,8 @@ module hook_profile() {
   translate([0, t_p_h_a_t - h_r]) {
     intersection() {
       difference() {
-        circle(r = h_r, $fn = 50);
-        circle(r = h_r - t_p_h_a_t, $fn = 50);
+        circle(r = h_r, $fn = 200);
+        circle(r = h_r - t_p_h_a_t, $fn = 200);
       }
       polygon([[0, 0], [-h_r, h_r], [0, h_r]]);
     }
@@ -91,22 +92,14 @@ module hook_profile() {
   translate([(t_p_h_a_t - 2*h_r)/sqrt(2), t_p_h_a_t - h_r + (2*h_r - t_p_h_a_t)/sqrt(2)]) {
     intersection() {
       difference() {
-        circle(r = h_r, $fn = 50);
-        circle(r = h_r - t_p_h_a_t, $fn = 50);
+        circle(r = h_r, $fn = 200);
+        circle(r = h_r - t_p_h_a_t, $fn = 200);
       }
       polygon([[0, 0], [h_r, -h_r], [-h_r, -h_r], [-h_r, 0]]);
     }
   }
   translate([(t_p_h_a_t - 2*h_r)/sqrt(2) - h_r + t_p_h_a_t/2, t_p_h_a_t - h_r + (2*h_r - t_p_h_a_t)/sqrt(2)]) {
-    circle(d = t_p_h_a_t, $fn = 50);
-  }
-}
-
-module small_hook_profile() {
-  scale([s_h_s, s_h_s]) {
-    mirror([1, 0]) {
-      hook_profile();
-    }
+    circle(d = t_p_h_a_t, $fn = 200);
   }
 }
 
@@ -115,14 +108,11 @@ module hook() {
     translate([0, -t_p_h_a_t/2, -t_p_h_a_t/2]) {
       linear_extrude(height = t_p_h_b_t) {
         hook_profile();
-        translate([t_p + t_z, s_h_s*t_p_h_a_t]) {
-          small_hook_profile();
-        }
       }
     }
   }
 }
 
-color("Orange") front_face();
-color("Yellow") back_face();
+//color("Orange") front_face();
+//color("Yellow") back_face();
 color("Red") hook();
