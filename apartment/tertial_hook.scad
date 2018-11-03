@@ -1,3 +1,5 @@
+/// DIMENSIONS ////////////////////////////////////////////////////////////////
+
 t_h = 17;
 t_a = 32;
 t_b = 14;
@@ -16,6 +18,8 @@ t2_h = 0.98 * (t_z + t_p);
 t2_s = 0.98 * t_b_s;
 h_r = 30;
 s_h_s = 0.5;
+
+/// SHAPES ////////////////////////////////////////////////////////////////////
 
 module trapezoid() {
   translate([0, t_h/2, 0]) {
@@ -47,6 +51,8 @@ module plate() {
     }
   }
 }
+
+/// MODELS ////////////////////////////////////////////////////////////////////
 
 module front_face() {
   rotate([0, 180, 0]) {
@@ -113,8 +119,43 @@ module hook() {
   }
 }
 
-rotate([90, 0, 0]) {
-  color("CornflowerBlue") front_face();
-  color("RoyalBlue") back_face();
-  color("DodgerBlue") hook();
+/// VISUALIZATION /////////////////////////////////////////////////////////////////
+
+module assembly() {
+  rotate([90, 0, 0]) {
+    front_face();
+    back_face();
+    hook();
+  }
 }
+
+module front_face_printable() {
+  translate([0, 0, t_p]) {
+    rotate([0, 180, 0]) {
+      front_face();
+    }
+  }
+}
+
+module back_face_printable() {
+  translate([0, 0, t_p + t_z]) {
+    rotate([0, 0, 0]) {
+      back_face();
+    }
+  }
+}
+
+module hook_printable() {
+  translate([0, 0, t_p_h_b_t/2]) {
+    rotate([0, 90, 0]) {
+      translate([0, 0, t_p + t_z]) {
+        hook();
+      }
+    }
+  }
+}
+
+/* front_face_printable(); */
+/* back_face_printable(); */
+/* hook_printable(); */
+assembly();
