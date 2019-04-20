@@ -12,13 +12,13 @@ supports = height - 12;
 column = 6;
 head_diameter = hole_diameter + 12;
 
-hole_l1_w = 26;
-hole_l1_h = 19;
+hole_l1_w = 24;
+hole_l1_h = 29;
 hole_l2_w = 0;
-hole_l2_h = 42;
-hole_r1_w = 24;
-hole_r1_h = 23;
-hole_r2_w = 24;
+hole_l2_h = 45;
+hole_r1_w = 21;
+hole_r1_h = 24;
+hole_r2_w = 21;
 hole_r2_h = 42;
 hole_d1 = 3;
 hole_d2 = 10;
@@ -104,6 +104,9 @@ module wall_top(is_outer = true) {
           circle(d = hole_d2);
         }
         translate([hole_l1_w, hole_l1_h]) {
+          circle(d = hole_d2);
+        }
+        translate([-side_width + hole_d2/2, depth + hole_d2/2]) {
           circle(d = hole_d2);
         }
       }
