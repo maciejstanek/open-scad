@@ -1,7 +1,7 @@
-square_side = 20;
-piece_square_ratio = 0.7;
+square_side = 30;
+piece_square_ratio = 0.65;
 piece_side = piece_square_ratio * square_side;
-pawn_piece_ratio = 0.75;
+pawn_piece_ratio = 0.65;
 pawn_side = pawn_piece_ratio * piece_side;
 
 module pawn() {
@@ -59,7 +59,7 @@ module king(variant = 0) {
   translate([-piece_side/2, -piece_side/2, 0]) {
     cube([piece_side, piece_side, piece_side]);
   }
-  linear_extrude(height = (variant == 1 ? 1.5 : 2) * piece_side) {
+  linear_extrude(height = (variant == 1 ? 1.5 : 1+sqrt(2)/2) * piece_side) {
     scale(piece_side/2) {
       polygon([[1, 0], [0, 1], [-1, 0], [0, -1]]);
     }
@@ -71,7 +71,7 @@ module queen(variant = 0) {
     cube([piece_side, piece_side, piece_side]);
   }
   if (variant != 1) {
-    cylinder(d = 0.3*piece_side, h = 1.5*piece_side, $fn = 100);
+    cylinder(d = 0.2*piece_side, h = 1.5*piece_side, $fn = 100);
   }
   translate([0, 0, (variant == 1 ? 1 : 1.5) * piece_side]) {
     sphere(d = piece_side, $fn = 100);
@@ -141,4 +141,4 @@ module _demo(variant = 0) {
   }
 }
 
-_demo(1);
+_demo(0);
