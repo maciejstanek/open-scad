@@ -1,8 +1,9 @@
-square_side = 30;
-piece_square_ratio = 0.65;
+square_side = 100/3;
+piece_square_ratio = 0.60;
 piece_side = piece_square_ratio * square_side;
-pawn_piece_ratio = 0.65;
+pawn_piece_ratio = 0.75;
 pawn_side = pawn_piece_ratio * piece_side;
+$fn = 100;
 
 module pawn() {
   translate([-pawn_side/2, -pawn_side/2, 0]) {
@@ -71,10 +72,10 @@ module queen(variant = 0) {
     cube([piece_side, piece_side, piece_side]);
   }
   if (variant != 1) {
-    cylinder(d = 0.2*piece_side, h = 1.5*piece_side, $fn = 100);
+    cylinder(d = 0.2*piece_side, h = 1.5*piece_side);
   }
   translate([0, 0, (variant == 1 ? 1 : 1.5) * piece_side]) {
-    sphere(d = piece_side, $fn = 100);
+    sphere(d = piece_side);
   }
 }
 
@@ -128,7 +129,9 @@ module _chess_set(variant = 0) {
 }
 
 module _demo(variant = 0) {
-  _chessboard();
+  translate([0, 0, -0.01]) {
+    _chessboard();
+  }
   color(c = [0.9, 0.9, 0.9]) {
     _chess_set(variant);
   }
