@@ -7,9 +7,9 @@ scad: $(MODELS:%=%.scad)
 %.scad: $(GENERATOR)
 	./$(GENERATOR) \
     --hole-diameter=105 \
-    --hole-depth=85 \
+    --hole-depth=86 \
     --height=105 \
-    --wall=1 \
+    --wall=0.8 \
     --diameter=145 \
     --sides=20 \
     --component=$* \

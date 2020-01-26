@@ -68,7 +68,7 @@ def scale_factor(n=1):
 mold_hold_distance = args.diameter/2.0 + args.dent + 5
 print("module generate_mold_side() {")
 print("  difference() {")
-print("    cube([2*{0:.2f}, {1:.2f}, {2:.2f}]);".format(args.wall, mold_hold_distance, args.height))
+print("    cube([{0:.2f}, {1:.2f}, {2:.2f}]);".format(args.wall, mold_hold_distance, args.height))
 print("    union() {")
 print("      intersection() {")
 print("        difference() {")
