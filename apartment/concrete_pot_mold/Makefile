@@ -10,6 +10,7 @@ scad: $(MODELS:%=%.scad)
     --hole-depth=86 \
     --height=105 \
     --wall=0.8 \
+    --bottom=0.6 \
     --diameter=145 \
     --sides=20 \
     --component=$* \
