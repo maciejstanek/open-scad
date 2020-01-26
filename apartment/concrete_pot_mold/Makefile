@@ -1,7 +1,7 @@
 GENERATOR=generate.py
 .PHONY: scad stl clean
 
-scad: mold.scad vase.scad lock.scad
+scad: mold.scad vase.scad
 
 %.scad: $(GENERATOR)
 	./$(GENERATOR) \
@@ -14,7 +14,7 @@ scad: mold.scad vase.scad lock.scad
     --component=$* \
     > $@
 
-stl: mold.stl vase.stl lock.stl
+stl: mold.stl vase.stl
 
 %.stl: %.scad
 	openscad $< -o $@
